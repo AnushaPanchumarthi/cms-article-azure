@@ -21,7 +21,7 @@ imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.n
 def home():
     user = User.query.filter_by(username=current_user.username).first_or_404()
     posts = Post.query.all()
-    app.logger.warning("User is validated")
+    app.logger.info("User is validated")
     return render_template(
         'index.html',
         title='Home Page',
@@ -36,7 +36,7 @@ def new_post():
         post = Post()
         post.save_changes(form, request.files['image_path'], current_user.id, new=True)
         return redirect(url_for('home'))
-    app.logger.warning("User creating a new post")
+    app.logger.info("User creating a new post")
     return render_template(
         'post.html',
         title='Create Post',
@@ -71,7 +71,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
-            app.logger.warning('%s is Not authenticated ',user)
+            app.logger.warning('% User is Not authenticated ',user)
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -80,7 +80,7 @@ def login():
         return redirect(next_page)
     session["state"] = str(uuid.uuid4())
     auth_url = _build_auth_url(scopes=Config.SCOPE, state=session["state"])
-    app.logger.warning('%s User is Authenticated',current_user)
+    app.logger.info('User is Authenticated')
     return render_template('login.html', title='Sign In', form=form, auth_url=auth_url)
 
 @app.route(Config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
@@ -104,7 +104,7 @@ def authorized():
         # Note: In a real app, we'd use the 'name' property from session["user"] below
         # Here, we'll use the admin username for anyone who is authenticated by MS
         user = User.query.filter_by(username="admin").first()
-        app.logger.info('%s is authenticated successfully',user)
+        app.logger.info(' User is authenticated successfully')
         login_user(user)
         _save_cache(cache)
     return redirect(url_for('home'))
