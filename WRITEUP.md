@@ -6,6 +6,8 @@
 - *Analyze costs, scalability, availability, and workflow*
 - *Choose the appropriate solution (VM or App Service) for deploying the app*
 - *Justify your choice*
+
+
 |                      | Virtual Machine( Single Tier) Basic Linux  | App Service(Linux Basic) | Comments
 | -------------------- | ------------------------------------------ |------------------------- | -------------
 | Pricing (per month)  | ₹10,328.20                                 | Monthly: ₹1,049.92       | VMs are highly expensive
